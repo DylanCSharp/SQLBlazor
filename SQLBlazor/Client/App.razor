@@ -1,0 +1,12 @@
+<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p>Welcome to Dylan Cox's Blazor App, communicate with the API by selecting Get Employees Navlink</p>
+            <br />
+            <SurveyPrompt></SurveyPrompt>
+        </LayoutView>
+    </NotFound>
+</Router>

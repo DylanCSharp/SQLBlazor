@@ -1,0 +1,103 @@
+﻿@page "/getemployees"
+
+@using SQLBlazor.Shared
+
+@inject HttpClient Http
+    
+<h2 class="text-center font-weight-light">Create, Read, Update and Delete Employees</h2>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <input class="form-control mb-3" @bind-value="newEmployee.EmpFirstname" placeholder="Enter Name" required />
+        <input class="form-control mb-3" @bind-value="newEmployee.EmpSecondname" placeholder="Enter Second Name" required />
+        <input class="form-control mb-3" @bind-value="newEmployee.EmpEmailAddress" placeholder="Enter Email Address" required />
+        <button class="btn btn-primary btn-block" @onclick="SubmitEmployee">Submit</button>
+        <button class="btn btn-info btn-block" @onclick="ClearFields">Clear Fields</button>
+    </div>
+    <div class="col-lg-6">
+        @if (employees == null)
+        {
+            <p><em>Loading your Data...</em></p>
+        }
+        else
+        {
+            <table class="table table-responsive">
+                <tr>
+                    <td>Name:</td>
+                    <td>Second Name:</td>
+                    <td>Email:</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @foreach (var e in employees)
+                {
+                    <tr>
+                        <td>@e.EmpFirstname</td>
+                        <td>@e.EmpSecondname</td>
+                        <td>@e.EmpEmailAddress</td>
+                        <td>
+                            <button class="btn btn-secondary btn-sm" @onclick="@(() => GetEmployee(e.Id))">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteEmployee(e.Id))">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+
+@code{
+
+    private Employee[] employees;
+    private Employee newEmployee = new Employee();
+    private bool edit = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employees = await Http.GetFromJsonAsync<Employee[]>("Employee/GetEmployees");
+    }
+    private async Task SubmitEmployee()
+    {
+        if (newEmployee.EmpFirstname != null && newEmployee.EmpSecondname != null && newEmployee.EmpEmailAddress != null)
+        {
+            if (edit == false)
+            {
+                await Http.PostAsJsonAsync("Employee/ReturnEmployee", newEmployee);
+                await OnInitializedAsync();
+                newEmployee = new Employee();
+
+            }
+            else
+            {
+                await Http.PutAsJsonAsync("Employee/PutEmployee/" + newEmployee.Id.ToString(), newEmployee);
+                await OnInitializedAsync();
+                newEmployee = new Employee();
+                edit = false;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private async Task GetEmployee(int id)
+    {
+        newEmployee = await Http.GetFromJsonAsync<Employee>("Employee/GetEmployeebyid/" + id.ToString());
+        edit = true;
+    }
+    private async Task DeleteEmployee(int id)
+    {
+        await Http.DeleteAsync("Employee/DeleteEmployee?id=" + id.ToString());
+        await ClearFields();
+    }
+
+    private async Task ClearFields()
+    {
+        await OnInitializedAsync();
+        newEmployee = new Employee();
+        edit = false;
+    }
+}
