@@ -29,8 +29,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-                @foreach (var e in employees)
-                {
+                <Virtualize Items="employees" Context="e">
                     <tr>
                         <td>@e.EmpFirstname</td>
                         <td>@e.EmpSecondname</td>
@@ -42,7 +41,7 @@
                             <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteEmployee(e.Id))">Delete</button>
                         </td>
                     </tr>
-                }
+                </Virtualize>
             </table>
         }
     </div>
@@ -88,6 +87,7 @@
         newEmployee = await Http.GetFromJsonAsync<Employee>("Employee/GetEmployeebyid/" + id.ToString());
         edit = true;
     }
+
     private async Task DeleteEmployee(int id)
     {
         await Http.DeleteAsync("Employee/DeleteEmployee?id=" + id.ToString());
