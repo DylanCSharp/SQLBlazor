@@ -15,7 +15,7 @@ namespace SQLBlazor.Server.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
 
         public EmployeeController(IConfiguration configuration)
         {
