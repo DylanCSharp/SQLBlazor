@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SQLBlazor.Server.Models;
 
 namespace SQLBlazor.Server
 {
@@ -22,8 +21,6 @@ namespace SQLBlazor.Server
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<TestingContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("BlazorDB")));
             services.AddSwaggerGen(opt => opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
                 Version = "v1",

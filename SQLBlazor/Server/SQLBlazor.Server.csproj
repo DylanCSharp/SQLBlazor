@@ -26,5 +26,9 @@
     <ProjectReference Include="..\Shared\SQLBlazor.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 
 </Project>

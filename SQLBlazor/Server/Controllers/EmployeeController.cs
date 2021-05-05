@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SQLBlazor.Server.Models;
 using SQLBlazor.Shared;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +15,10 @@ namespace SQLBlazor.Server.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private TestingContext _context;
         private IConfiguration _config;
 
-        public EmployeeController(TestingContext context, IConfiguration configuration)
+        public EmployeeController(IConfiguration configuration)
         {
-            _context = context;
             _config = configuration;
         }
 

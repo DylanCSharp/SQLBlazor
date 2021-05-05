@@ -7,14 +7,14 @@
 <h2 class="text-center font-weight-light">Create, Read, Update and Delete Employees</h2>
 <br />
 <div class="row">
-    <div class="col-lg-auto">
+    <div class="col-lg-6">
         <input class="form-control mb-3" @bind-value="newEmployee.EmpFirstname" placeholder="Enter Name" required />
         <input class="form-control mb-3" @bind-value="newEmployee.EmpSecondname" placeholder="Enter Second Name" required />
         <input class="form-control mb-3" @bind-value="newEmployee.EmpEmailAddress" placeholder="Enter Email Address" required />
         <button class="btn btn-primary btn-block" @onclick="SubmitEmployee">Submit</button>
         <button class="btn btn-info btn-block" @onclick="ClearFields">Clear Fields</button>
     </div>
-    <div class="col-lg-auto">
+    <div class="col-lg-6">
         @if (employees == null)
         {
             <p><em>Loading your Data...</em></p>
