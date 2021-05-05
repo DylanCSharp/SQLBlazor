@@ -7,42 +7,46 @@
 <h2 class="text-center font-weight-light">Create, Read, Update and Delete Employees</h2>
 <br />
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-auto">
         <input class="form-control mb-3" @bind-value="newEmployee.EmpFirstname" placeholder="Enter Name" required />
         <input class="form-control mb-3" @bind-value="newEmployee.EmpSecondname" placeholder="Enter Second Name" required />
         <input class="form-control mb-3" @bind-value="newEmployee.EmpEmailAddress" placeholder="Enter Email Address" required />
         <button class="btn btn-primary btn-block" @onclick="SubmitEmployee">Submit</button>
         <button class="btn btn-info btn-block" @onclick="ClearFields">Clear Fields</button>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-auto">
         @if (employees == null)
         {
             <p><em>Loading your Data...</em></p>
         }
         else
         {
-            <table class="table table-responsive">
+    <table class="table table-responsive" style="height:75vh;">
+        <thead>
+        <tr>
+            <td>Name:</td>
+            <td>Second Name:</td>
+            <td>Email:</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+            <Virtualize Context="e" Items="@employees">
                 <tr>
-                    <td>Name:</td>
-                    <td>Second Name:</td>
-                    <td>Email:</td>
-                    <td></td>
-                    <td></td>
+                    <td>@e.EmpFirstname</td>
+                    <td>@e.EmpSecondname</td>
+                    <td>@e.EmpEmailAddress</td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm" @onclick="@(() => GetEmployee(e.Id))">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteEmployee(e.Id))">Delete</button>
+                    </td>
                 </tr>
-                <Virtualize Items="employees" Context="e">
-                    <tr>
-                        <td>@e.EmpFirstname</td>
-                        <td>@e.EmpSecondname</td>
-                        <td>@e.EmpEmailAddress</td>
-                        <td>
-                            <button class="btn btn-secondary btn-sm" @onclick="@(() => GetEmployee(e.Id))">Edit</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteEmployee(e.Id))">Delete</button>
-                        </td>
-                    </tr>
-                </Virtualize>
-            </table>
+            </Virtualize>
+        </tbody>
+    </table>
         }
     </div>
 </div>
