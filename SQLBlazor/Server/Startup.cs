@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SQLBlazor.Server.Controllers;
 
 namespace SQLBlazor.Server
 {
@@ -21,6 +22,7 @@ namespace SQLBlazor.Server
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSingleton<EmployeeController>();
             services.AddSwaggerGen(opt => opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
                 Version = "v1",
